@@ -1,0 +1,61 @@
+.container {
+  max-width: 600px;
+  padding:0 20px;
+  margin: 0 auto;
+}
+header {
+  background: red;
+  text-align: center;
+  padding: 15px 0;
+}
+h1 {
+  color: #fff;
+  text-align: center;
+}
+input {
+  width: 70%;
+  padding: 10px;
+}
+header button {
+  width: 20%;
+  background: grey;
+  color: darkgrey;
+  padding: 10px;
+}
+ul {
+  padding: 0;
+}
+ul li {
+  display: flex;
+  padding: 15px 25px;
+  align-items: center;
+}
+ul li.editing-now {
+  border: 2px solid red;
+}
+ul li button {
+  background: none;
+  border: none;
+  font-size: 28px;
+  margin-left: auto;
+  font-weight: bold;
+  position: relative;
+  z-index: 9999;
+}
+ul li.completed {
+  text-decoration: line-through;
+  color: #212121;
+  background: limegreen;
+}
+.to-do-list i {
+  margin-right: 15px;
+  display: none;
+}
+.to-do-list li.completed i {
+  display: block;
+}
+ul li:hover {
+  text-decoration: line-through;
+  color: #212121;
+  background: darkgrey;
+}
