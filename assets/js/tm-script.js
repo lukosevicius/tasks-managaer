@@ -1,10 +1,10 @@
 (function(){
 'use strict'
 
-var originalLog = console.log
-console.log=function(obj){
-    originalLog(JSON.parse(JSON.stringify(obj)))
-}
+// var originalLog = console.log
+// console.log=function(obj){
+//     originalLog(JSON.parse(JSON.stringify(obj)))
+// }
 
 var button = document.querySelector('.input-container button');
 var input = document.querySelector('.input-container input');
@@ -28,17 +28,19 @@ function init() {
     taskObject.text = task;
 
     if(tasks == null) {
-      pushToDB(taskObject);
+      tasksArray.push(taskObject);
+      pushToDB();
+
     } else {
       getFromDB();
-      pushToDB(taskObject);
+      tasksArray.push(taskObject);
+      pushToDB();
     }
   }
   refreshTasks();
 }
 
-function pushToDB (taskObject) {
-  tasksArray.push(taskObject);
+function pushToDB () {
   database.setItem('tasks', JSON.stringify(tasksArray));
 }
 
@@ -50,14 +52,34 @@ function getFromDB() {
 function refreshTasks(){
 
   if(database.getItem('tasks') != null) {
-    getFromDB()
+    getFromDB();
 
     list.innerHTML = '';
-    tasksArray.forEach(function(task){
-      list.innerHTML += `<li>${task.text}</li>`
+    tasksArray.forEach(function(task, index){
+      list.innerHTML += `<li item-index="${index}">${task.text} <button>X</button></li>`;
+      var removeButton = document.querySelector('.to-do-list li button');
     })
+
+    addListeners();
   }
 
+}
+
+function addListeners() {
+  var deleteButtons = document.querySelectorAll('.to-do-list li button');
+
+  deleteButtons.forEach(function(removeButton){
+    removeButton.addEventListener('click', remove);
+  })
+
+}
+
+function remove() {
+  var removeIndex = this.parentNode.getAttribute('item-index');
+  getFromDB();
+  tasksArray.splice(removeIndex, 1);
+  pushToDB();
+  refreshTasks();
 }
 
 
